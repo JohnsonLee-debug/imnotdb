@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD com.imnotdb.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.imnotdb.Mapper.NameMapper">
+    <select id="getNameByNconst" parameterType="String" resultType="name">
+        SELECT *
+        FROM name
+        WHERE nconst=#{nconst};
+    </select>
+    <select id="getNameByJobAndName" resultType="name">
+        SELECT *
+        FROM name
+        WHERE MATCH(primaryProfession) AGAINST(#{job})
+        AND MATCH(primaryName) AGAINST(#{name});
+    </select>
+</mapper>
