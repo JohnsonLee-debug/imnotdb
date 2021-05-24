@@ -1,4 +1,4 @@
 package com.imnotdb.Mapper;
 
-public interface RatingsMapper {
+public class RatingsMapper {
 }

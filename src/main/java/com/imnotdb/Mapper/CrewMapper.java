@@ -1,4 +1,5 @@
 package com.imnotdb.Mapper;
 
-public interface CrewMapper {
+public class CrewMapper {
+
 }

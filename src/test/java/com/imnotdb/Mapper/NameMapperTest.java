@@ -1,13 +1,11 @@
 package com.imnotdb.Mapper;
 
 import com.imnotdb.Entity.Name;
-import com.imnotdb.utils.MybatisUtils;
+import com.imnotdb.Utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NameMapperTest {
 
@@ -22,24 +20,24 @@ class NameMapperTest {
 
     @Test
     void getDirectorByName() {
-        try (SqlSession sqlSession = MybatisUtils.getSqlSession()){
-            NameMapper mapper = sqlSession.getMapper(NameMapper.class);
-            List<Name> nameList = mapper.getDirectorByName("bergman");
-            for (Name name :  nameList) {
-                System.out.println(name);
-            }
-        }
+//        try (SqlSession sqlSession = MybatisUtils.getSqlSession()){
+//            NameMapper mapper = sqlSession.getMapper(NameMapper.class);
+//            List<Name> nameList = mapper("bergman");
+//            for (Name name :  nameList) {
+//                System.out.println(name);
+//            }
+//        }
     }
 
     @Test
     void getActorByName() {
-        try (SqlSession sqlSession = MybatisUtils.getSqlSession()){
-            NameMapper mapper = sqlSession.getMapper(NameMapper.class);
-            List<Name> nameList = mapper.getActorByName("kelly");
-            for (Name name : nameList) {
-                System.out.println(name);
-            }
-        }
+//        try (SqlSession sqlSession = MybatisUtils.getSqlSession()){
+//            NameMapper mapper = new NameMapper();
+//            List<Name> nameList = mapper.getNameByNconst();
+//            for (Name name : nameList) {
+//                System.out.println(name);
+//            }
+//        }
     }
 
     @Test

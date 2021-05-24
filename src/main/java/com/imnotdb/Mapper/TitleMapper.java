@@ -1,21 +1,78 @@
 package com.imnotdb.Mapper;
 
 import com.imnotdb.Entity.Title;
-import org.apache.ibatis.annotations.Param;
-import org.apache.logging.log4j.util.Strings;
+import com.imnotdb.Utils.NutDaoUtils;
+import org.nutz.dao.Cnd;
+import org.nutz.dao.QueryResult;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.impl.NutDao;
+import org.nutz.dao.pager.Pager;
+import org.nutz.dao.sql.Criteria;
+import org.nutz.dao.sql.Sql;
+import org.nutz.dao.util.cri.SqlExpression;
 
 import java.util.List;
+import java.util.Map;
 
-public interface TitleMapper {
-    Title getTitleByTconst(@Param("tconst") String tconst);
+public class TitleMapper {
+    private static final NutDao dao = NutDaoUtils.getNutDao();
+    static private final String MOVIENAME = "MOVIENAME";
+    static private final String DIRECTOR = "DIRECTOR ";
+    static private final String WRITER = "WRITER ";
+    static private final String ACTOR = "ACTOR ";
+    static private final String RELEASE_YEAR_BEGIN = "RELEASE_YEAR_BEGIN ";
+    static private final String RELEASE_YEAR_END = "RELEASE_YEAR_END ";
+    static private final String GENRES = "GENRES ";
+    static private final String ISADULT = "ISADULT ";
+    static private final String TITLETYPE = "TITLETYPE ";
+    static private final String RATINGMORETHAN = "RATINGMORETHAN ";
+    static private final String RATINGLESSTHAN = "RATINGLESSTHAN ";
+    static private final String LENGTHMORETHAN = "LENGTHMORETHAN ";
+    static private final String LENGTHLESSTHAN = "LENGTHLESSTHAN ";
 
-    List<Title> getTitleByAdult(@Param("adult") Boolean adult);
+    public static QueryResult getTitleByCnds(Map<String, Object> conditions, int pageNumber, int pageSize, boolean setTotal) {
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        Criteria cri = Cnd.cri();
+        if (conditions.containsKey(MOVIENAME)){
+//            cri.where().and();
+        }
+        return null;
+    }
 
-    List<Title> getTitleByGenres(@Param("genres") String genres);
-    List<Title> getTitleByType(@Param("type") String type);
-    List<Title> getTitleByLen(@Param("from")Integer from, @Param("to") Integer to);
-    List<Title> getTitleByRating(@Param("from")Double from, @Param("to") Double to);
-    default List<Title> getTitleByGenres(List<String> genres){
-        return getTitleByGenres(Strings.join(genres,' '));
+    public Title getTitleByTconst(String tconst) {
+        return dao.fetch(Title.class, tconst);
+    }
+    public List<Title> getTitleByAdult(Boolean adult, int pageNumber, int pageSize, boolean setTotal) {
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        dao.query(Title.class,
+                Cnd.where("adult", "=", adult),
+                pager);
+        if (setTotal) {
+            pager.setRecordCount(dao.count(Title.class,
+                    Cnd.where("adult", "=", adult)));
+        }
+        return null;
+    }
+
+    public QueryResult getAllTitle(int pageNumber, int pageSize, String sortBy) {
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        List<Title> titleList = dao.query(Title.class, Cnd.wrap("1 = 1"), pager);
+        return new QueryResult(titleList, pager);
+    }
+
+    public List<Title> getTitleByGenres(String genres) {
+        return null;
+    }
+
+    public List<Title> getTitleByType(String type) {
+        return null;
+    }
+
+    public List<Title> getTitleByLen(Integer from, Integer to) {
+        return null;
+    }
+
+    public List<Title> getTitleByRating(Double from, Double to) {
+        return null;
     }
 }

@@ -1,10 +1,7 @@
 package com.imnotdb.Mapper;
 
 import com.imnotdb.Entity.Akas;
-import com.imnotdb.Mapper.Impl.AkasMapperImpl;
-import com.imnotdb.utils.MybatisUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.nutz.dao.QueryResult;
 
@@ -13,32 +10,28 @@ public class AkasMapperTest {
 
     @Test
     public void getAkasByNameTest(){
-        AkasMapper akasMapper = new AkasMapperImpl();
-        String name = "want";
-        QueryResult queryResult = akasMapper.getAkasByName(name, 1, 25);
+        AkasMapper akasMapperbak = new AkasMapper();
+        String name = "你好";
+        QueryResult queryResult = akasMapperbak.getAkasByName(name, 1, 25, true);
         for (Akas akas : queryResult.getList(Akas.class)) {
-            System.out.println(akas);
+            log.info(akas.toString());
         }
+        log.info("pageCount: {}", queryResult.getPager().getPageCount());
+        log.info("recordSize: {}", queryResult.getPager().getRecordCount());
         for(int i = 0; i < 10 && queryResult.getPager().hasNext();i++){
-            queryResult = akasMapper.getAkasByName(name, queryResult.getPager().getPageNumber() + 1, queryResult.getPager().getPageSize());
+            queryResult = akasMapperbak.getAkasByName(name, queryResult.getPager().getPageNumber() + 1, queryResult.getPager().getPageSize(), true);
             for (Akas akas : queryResult.getList(Akas.class)) {
                 System.out.println(akas);
             }
         }
-        System.(queryResult.getPager().getPageCount());
-//            List<Akas> akasList = akasMapper.getAkasByName("Carmencita");
-//            for (Akas akas : akasList) {
-//                System.out.println(akas);
-//            }
     }
     @Test
     public void getAkasByTconstTest(){
-//        try (SqlSession sqlSession = MybatisUtils.getSqlSession()){
-//            AkasMapper akasMapper = sqlSession.getMapper(AkasMapper.class);
-//            List<Akas> akasList = akasMapper.getAkasByTconst("tt0000001");
-//            for (Akas akas : akasList) {
-//                System.out.println(akas);
-//            }
-//        }
+        AkasMapper akasMapperbak = new AkasMapper();
+        String tconst = "tt9418812";
+        QueryResult queryResult = akasMapperbak.getAkasByTconst(tconst, 0, 0, true);
+        for (Akas akas : queryResult.getList(Akas.class)) {
+            log.info(akas.toString());
+        }
     }
 }

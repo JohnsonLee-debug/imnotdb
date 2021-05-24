@@ -1,4 +1,4 @@
 package com.imnotdb.Mapper;
 
-public interface PrincipalsMapper {
+public class PrincipalsMapper {
 }

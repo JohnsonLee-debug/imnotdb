@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.nutz.dao.entity.annotation.Column;
+import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
 @Table("title_crew")
@@ -11,7 +12,7 @@ import org.nutz.dao.entity.annotation.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Crew {
-    @Column("tconst")
+    @Name
     String tconst;
     @Column("directors")
     String directors;

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.imnotdb.Mapper.AkasMapper">
+<mapper namespace="com.imnotdb.Mapper.AkasMapperbak">
     <select id="getAkasByName" parameterType="String" resultType="akas" >
         SELECT * FROM imnotdb.title_akas WHERE MATCH(title) AGAINST(#{name});
     </select>

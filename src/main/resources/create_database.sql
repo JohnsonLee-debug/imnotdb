@@ -7,13 +7,13 @@ USE imnotdb;
 CREATE TABLE title_akas(
     tconst VARCHAR(20),
     ordering INTEGER,
-    title TEXT,
+    title VARCHAR(400),
     region VARCHAR(200),
     language VARCHAR(200),
     types VARCHAR(200),
     attributes VARCHAR(200),
     isOriginalTitle BOOLEAN,
-    FULLTEXT (title),
+    FULLTEXT (title) WITH PARSER ngram,
     INDEX akasIndexByTconst (tconst)
 );
 
@@ -26,9 +26,9 @@ CREATE TABLE title_basics(
     startYear YEAR,
     endYear YEAR,
     runtimeMinutes INTEGER,
-    genres TEXT,
+    genres VARCHAR(200),
     primary key (tconst),
-    FULLTEXT (genres)
+    FULLTEXT (genres) WITH PARSER ngram
 );
 CREATE TABLE title_crew(
     tconst VARCHAR(20) NOT NULL ,
@@ -56,11 +56,11 @@ CREATE TABLE ratings(
 
 CREATE TABLE name(
     nconst VARCHAR(20) NOT NULL ,
-    primaryName TEXT,
+    primaryName VARCHAR(200),
     birthYear YEAR,
     deathYear YEAR,
     primaryProfession VARCHAR(200),
     knownForTitles VARCHAR (100),
     primary key(nconst),
-    FULLTEXT (primaryName)
+    FULLTEXT (primaryName) WITH PARSER ngram
 );
