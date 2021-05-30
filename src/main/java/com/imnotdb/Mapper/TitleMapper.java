@@ -31,7 +31,43 @@ public class TitleMapper {
         Pager pager = dao.createPager(pageNumber, pageSize);
         Criteria cri = Cnd.cri();
         if (conditions.containsKey(MOVIENAME)){
-//            cri.where().and();
+
+        }
+        if (conditions.containsKey(DIRECTOR)){
+
+        }
+        if (conditions.containsKey(WRITER)){
+
+        }
+        if (conditions.containsKey(ACTOR)){
+
+        }
+        if (conditions.containsKey(RELEASE_YEAR_BEGIN)){
+
+        }
+        if (conditions.containsKey(RELEASE_YEAR_END)){
+
+        }
+        if (conditions.containsKey(GENRES)){
+
+        }
+        if (conditions.containsKey(ISADULT)){
+
+        }
+        if (conditions.containsKey(TITLETYPE)){
+
+        }
+        if (conditions.containsKey(RATINGMORETHAN)){
+
+        }
+        if (conditions.containsKey(RATINGLESSTHAN)){
+
+        }
+        if (conditions.containsKey(LENGTHMORETHAN)){
+
+        }
+        if (conditions.containsKey(LENGTHLESSTHAN)){
+
         }
         return null;
     }

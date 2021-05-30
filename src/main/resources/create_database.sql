@@ -66,3 +66,21 @@ CREATE TABLE name(
     primary key(nconst),
     FULLTEXT (primaryName) WITH PARSER ngram
 );
+
+CREATE VIEW BigTable AS
+(SELECT
+     t.tconst, t.titleType, t.primaryTitle, t.originalTitle, t.isAdult, t.startYear, t.endYear, t.runtimeMinutes, t.genres,
+     r.averageRating, r.numVotes,
+     a.ordering, a.title, a.region, a.language, a.types, a.attributes, a.isOriginalTitle,
+     c.directors, c.writers,
+     p.nconst as principal_nconst, p.category, p.job, p.characters
+FROM
+    ((((title_basics as t
+        right outer join ratings r
+        on t.tconst = r.tconst)
+        right outer join title_akas as a
+        on t.tconst = a.tconst)
+        right outer join title_crew as c
+        on t.tconst = c.tconst))
+        right outer join title_principals as p
+                         on t.tconst = p.tconst);
