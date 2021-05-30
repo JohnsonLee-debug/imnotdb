@@ -1,7 +1,6 @@
 package com.imnotdb.Mapper;
 
 import com.imnotdb.Entity.Crew;
-import com.imnotdb.Entity.Crew;
 import com.imnotdb.Utils.NutDaoUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.QueryResult;
@@ -13,28 +12,46 @@ import java.util.List;
 
 public class CrewMapper {
     private static final NutDao dao = NutDaoUtils.getNutDao();
-    public QueryResult getCrewByDirectorsId(String name, int pageNumber, int pageSize, boolean setTotal){
+
+    public QueryResult getCrewByDirectorId(String DirectorId, int pageNumber, int pageSize, boolean setTotal) {
         Pager pager = dao.createPager(pageNumber, pageSize);
-        Sql sql = NutDaoUtils.matchAgainst(Crew.class, "directors", name, false);
+        Sql sql = NutDaoUtils.matchAgainst(Crew.class, "directors", DirectorId, false);
         sql.setPager(pager);
         dao.execute(sql);
         List<Crew> crewList = sql.getList(Crew.class);
 
-        if (setTotal){
-            Sql sqlCount = NutDaoUtils.matchAgainst(Crew.class, "title", name, true);
+        if (setTotal) {
+            Sql sqlCount = NutDaoUtils.matchAgainst(Crew.class, "directors", DirectorId, true);
             dao.execute(sqlCount);
             pager.setRecordCount(sqlCount.getInt());
         }
         return new QueryResult(crewList, pager);
     }
+
+    public QueryResult getCrewByWriterId(String WriterId, int pageNumber, int pageSize, boolean setTotal) {
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        Sql sql = NutDaoUtils.matchAgainst(Crew.class, "directors", WriterId, false);
+        sql.setPager(pager);
+        dao.execute(sql);
+        List<Crew> crewList = sql.getList(Crew.class);
+
+        if (setTotal) {
+            Sql sqlCount = NutDaoUtils.matchAgainst(Crew.class, "directors", WriterId, true);
+            dao.execute(sqlCount);
+            pager.setRecordCount(sqlCount.getInt());
+        }
+        return new QueryResult(crewList, pager);
+    }
+
     public QueryResult getCrewByTconst(String tconst, int pageNumber, int pageSize, boolean setTotal) {
         Pager pager = dao.createPager(pageNumber, pageSize);
         List<Crew> crewList = dao.query(Crew.class,
                 Cnd.where("tconst", "=", tconst),
                 pager);
-        if(setTotal){
+        if (setTotal) {
             pager.setRecordCount(dao.count(Crew.class, Cnd.where("tconst", "=", tconst)));
         }
         return new QueryResult(crewList, pager);
     }
+
 }
