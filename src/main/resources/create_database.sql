@@ -31,10 +31,12 @@ CREATE TABLE title_basics(
     FULLTEXT (genres) WITH PARSER ngram
 );
 CREATE TABLE title_crew(
-    tconst VARCHAR(20) NOT NULL ,
+    tconst VARCHAR(20) NOT NULL,
     directors VARCHAR (200),
     writers VARCHAR(200),
-    primary key(tconst)
+    primary key(tconst),
+    FULLTEXT (directors) WITH PARSER ngram,
+    FULLTEXT (writers) WITH PARSER ngram
 );
 
 CREATE TABLE title_principals(
