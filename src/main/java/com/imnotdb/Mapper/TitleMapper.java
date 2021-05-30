@@ -4,12 +4,9 @@ import com.imnotdb.Entity.Title;
 import com.imnotdb.Utils.NutDaoUtils;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.QueryResult;
-import org.nutz.dao.Sqls;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.dao.pager.Pager;
 import org.nutz.dao.sql.Criteria;
-import org.nutz.dao.sql.Sql;
-import org.nutz.dao.util.cri.SqlExpression;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +27,7 @@ public class TitleMapper {
     static private final String LENGTHMORETHAN = "LENGTHMORETHAN ";
     static private final String LENGTHLESSTHAN = "LENGTHLESSTHAN ";
 
-    public static QueryResult getTitleByCnds(Map<String, Object> conditions, int pageNumber, int pageSize, boolean setTotal) {
+    public QueryResult getTitleByCnds(Map<String, Object> conditions, int pageNumber, int pageSize, boolean setTotal) {
         Pager pager = dao.createPager(pageNumber, pageSize);
         Criteria cri = Cnd.cri();
         if (conditions.containsKey(MOVIENAME)){
@@ -72,7 +69,12 @@ public class TitleMapper {
         return null;
     }
 
-    public List<Title> getTitleByRating(Double from, Double to) {
-        return null;
+    public QueryResult getTitleByRating(Double from, Double to, int pageNumber, int pageSize) {
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        List<Title> titleList = dao.query(Title.class,
+                Cnd.where("averageRating", ">=", from)
+                        .and("averageRating", "<=", to),
+                pager);
+        return new QueryResult(titleList, pager);
     }
 }

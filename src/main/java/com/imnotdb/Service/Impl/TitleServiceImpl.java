@@ -9,6 +9,6 @@ import java.util.Map;
 public class TitleServiceImpl implements TitleService {
     @Override
     public QueryResult getTitleByCnds(Map<String, Object> conditions, int pageNumber, int pageSize, boolean setTotal) {
-        return TitleMapper.getTitleByCnds(conditions, pageNumber, pageSize, setTotal);
+        return new TitleMapper().getTitleByCnds(conditions, pageNumber, pageSize, setTotal);
     }
 }

@@ -14,11 +14,11 @@ public class NutDaoUtils {
         dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/imnotdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true");
         dataSource.setUsername("root");
         dataSource.setPassword("password");
-        try {
-            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         dao = new NutDao(dataSource);
     }
     public static NutDao getNutDao() {

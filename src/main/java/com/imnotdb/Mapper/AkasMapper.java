@@ -26,13 +26,17 @@ public class AkasMapper {
         }
         return new QueryResult(akasList, pager);
     }
-    public QueryResult getAkasByTconst(String tconst, int pageNumber, int pageSize, boolean setTotal) {
+    public QueryResult getAkasByTconst(String tconst,
+                                       int pageNumber,
+                                       int pageSize,
+                                       boolean setTotal) {
         Pager pager = dao.createPager(pageNumber, pageSize);
         List<Akas> akasList = dao.query(Akas.class,
                 Cnd.where("tconst", "=", tconst),
                 pager);
         if(setTotal){
-            pager.setRecordCount(dao.count(Akas.class, Cnd.where("tconst", "=", tconst)));
+            pager.setRecordCount(dao.count(Akas.class,
+                    Cnd.where("tconst", "=", tconst)));
         }
         return new QueryResult(akasList, pager);
     }

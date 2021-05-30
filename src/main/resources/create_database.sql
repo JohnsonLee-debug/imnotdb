@@ -28,7 +28,9 @@ CREATE TABLE title_basics(
     runtimeMinutes INTEGER,
     genres VARCHAR(200),
     primary key (tconst),
-    FULLTEXT (genres) WITH PARSER ngram
+    FULLTEXT (genres) WITH PARSER ngram,
+    FULLTEXT (primaryTitle) WITH PARSER ngram,
+    FULLTEXT (originalTitle) WITH PARSER ngram
 );
 CREATE TABLE title_crew(
     tconst VARCHAR(20) NOT NULL ,

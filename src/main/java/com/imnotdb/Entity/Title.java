@@ -36,6 +36,6 @@ public class Title {
     List<Akas> akas;
     @One(field = "tconst")
     Crew crew;
-    @One(field = "tconst")
+    @One(target = Ratings.class,field = "tconst", key = "tconst")
     Ratings ratings;
 }
