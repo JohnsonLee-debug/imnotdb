@@ -6,6 +6,8 @@ import org.nutz.dao.entity.Entity;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.dao.impl.SimpleDataSource;
 import org.nutz.dao.sql.Sql;
+import org.nutz.dao.util.cri.SqlExpression;
+import org.nutz.dao.util.cri.SqlExpressionGroup;
 
 public class NutDaoUtils {
     private static final SimpleDataSource dataSource = new SimpleDataSource();
@@ -14,11 +16,6 @@ public class NutDaoUtils {
         dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/imnotdb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true");
         dataSource.setUsername("root");
         dataSource.setPassword("password");
-//        try {
-//            dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         dao = new NutDao(dataSource);
     }
     public static NutDao getNutDao() {
@@ -30,6 +27,7 @@ public class NutDaoUtils {
     // count代表是否是计数查询
     public static <T> Sql matchAgainst(Class<T> classOfT, String columns, String words, boolean count){
         String sqlstr = "";
+        SqlExpressionGroup sqlExpressionGroup = new SqlExpressionGroup();
         Sql sql = null;
         var entity = dao.getEntity(classOfT);
         if (count){
@@ -40,7 +38,6 @@ public class NutDaoUtils {
             sql.setCallback(Sqls.callback.entities());
             sql.setEntity(entity);
         }
-
         sql.vars().set("table_name", entity.getTableName());
         sql.vars().set("columns", columns);
         sql.params().set("words", words);

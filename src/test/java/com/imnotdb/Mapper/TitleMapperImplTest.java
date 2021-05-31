@@ -34,14 +34,11 @@ class TitleMapperTest {
 
     @Test
     void getTitleByLen() {
-    }
-
-    @Test
-    void getTitleByRating() {
         TitleMapper titleMapper = new TitleMapper();
-        QueryResult titleByRating = titleMapper.getTitleByRating(2.0, 3.0, 1, 20);
-        for (Title t : titleByRating.getList(Title.class)) {
-            log.info("{}", t);
+        QueryResult titleByLen = titleMapper.getTitleByLen(null, null, 1, 20, true);
+        for (Title title : titleByLen.getList(Title.class)) {
+            log.info(title.toString());
         }
     }
+
 }

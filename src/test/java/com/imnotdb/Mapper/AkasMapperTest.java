@@ -34,4 +34,31 @@ public class AkasMapperTest {
             log.info(akas.toString());
         }
     }
+    @Test
+    public void getAkasByRegion(){
+        AkasMapper akasMapper = new AkasMapper();
+        String region = "JP";
+        QueryResult queryResult = akasMapper.getAkasByRegion(region, 1, 20, true);
+        for (Akas akas : queryResult.getList(Akas.class)) {
+            log.info(akas.toString());
+        }
+        queryResult = akasMapper.getAkasByRegion(region, 2, 20, false);
+        for (Akas akas : queryResult.getList(Akas.class)) {
+            log.info(akas.toString());
+        }
+    }
+    @Test
+    public void getAkasByNameAndRegionTest(){
+        AkasMapper akasMapper = new AkasMapper();
+        String region = "JP";
+        String name = "可能";
+        QueryResult queryResult = akasMapper.getAkasByRegionAndName(region, name, 1, 20, false);
+        for (Akas akas : queryResult.getList(Akas.class)) {
+            log.info(akas.toString());
+        }
+        queryResult = akasMapper.getAkasByRegionAndName(region,name, queryResult.getPager().getPageNumber()+1, queryResult.getPager().getPageSize(), false);
+        for (Akas akas : queryResult.getList(Akas.class)) {
+            log.info(akas.toString());
+        }
+    }
 }

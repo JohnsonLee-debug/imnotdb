@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.nutz.dao.entity.annotation.Column;
+import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
 @Table("title_principals")
@@ -11,7 +12,7 @@ import org.nutz.dao.entity.annotation.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Principals {
-    @Column("tconst")
+    @Name
     private String tconst;
     @Column("nconst")
     private Integer ordering;
