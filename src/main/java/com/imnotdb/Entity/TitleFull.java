@@ -3,25 +3,23 @@ package com.imnotdb.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.nutz.dao.entity.annotation.*;
+import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Name;
+import org.nutz.dao.entity.annotation.Table;
 
-import java.sql.Date;
-import java.util.List;
-
-@Table("title_basics")
+@Table("title_full")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Title {
+public class TitleFull {
     @Name
     private String tconst;
     @Column("titleType")
     private String titleType;
     @Column("primaryTitle")
     private String primaryTitle;
-    @Column("originalTitle")
-    private String originalTitle;
+    @Column("akaTitles")
+    private String akaTitles;
     @Column("isAdult")
     private boolean isAdult;
     @Column("startYear")
@@ -32,12 +30,12 @@ public class Title {
     private Integer runtimeMinutes;
     @Column("genres")
     private String genres;
-    @Many(field = "tconst")
-    List<Principals> principals;
-    @Many(field = "tconst")
-    List<Akas> akas;
-    @One(field = "tconst")
-    Crew crew;
-    @One(target = Ratings.class,field = "tconst", key = "tconst")
-    Ratings ratings;
+    @Column("actors")
+    private String actors;
+    @Column("directors")
+    private String directors;
+    @Column("writers")
+    private String writers;
+    @Column("averageRating")
+    private Double averageRating;
 }

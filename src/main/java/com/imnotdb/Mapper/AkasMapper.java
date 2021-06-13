@@ -68,6 +68,7 @@ public class AkasMapper {
         sql.params().set("region", region);
         sql.setCallback(Sqls.callback.entities());
         sql.setEntity(dao.getEntity(Akas.class));
+        sql.setPager(pager);
         dao.execute(sql);
         List<Akas> akasList = sql.getList(Akas.class);
         if(setTotal){

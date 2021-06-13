@@ -14,8 +14,8 @@ class CrewMapperTest {
     @Test
     void getCrewByDirectorId() {
         CrewMapper crewMapper = new CrewMapper();
-        String nconst = "nm8563276";
-        QueryResult queryResult = crewMapper.getCrewByTconst(nconst, 0, 0, true);
+        String nconst = "nm0666972";
+        QueryResult queryResult = crewMapper.getCrewByDirectorId(nconst, 0, 0, true);
         for (Crew crew : queryResult.getList(Crew.class)) {
             log.info(crew.toString());
         }
@@ -24,8 +24,8 @@ class CrewMapperTest {
     @Test
     void getCrewByWriterId() {
         CrewMapper crewMapper = new CrewMapper();
-        String nconst = "nm8563403";
-        QueryResult queryResult = crewMapper.getCrewByTconst(nconst, 0, 0, true);
+        String nconst = "nm0666972";
+        QueryResult queryResult = crewMapper.getCrewByWriterId(nconst, 1, 0, true);
         for (Crew crew : queryResult.getList(Crew.class)) {
             log.info(crew.toString());
         }

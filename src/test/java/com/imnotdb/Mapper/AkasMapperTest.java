@@ -52,7 +52,7 @@ public class AkasMapperTest {
         AkasMapper akasMapper = new AkasMapper();
         String region = "JP";
         String name = "可能";
-        QueryResult queryResult = akasMapper.getAkasByRegionAndName(region, name, 1, 20, false);
+        QueryResult queryResult = akasMapper.getAkasByRegionAndName(region, name, 1, 20, true);
         for (Akas akas : queryResult.getList(Akas.class)) {
             log.info(akas.toString());
         }

@@ -27,7 +27,7 @@ public class Akas {
     private String types;
     @Column("attributes")
     private String attributes;
-    @Column("isOrgionalTitle")
+    @Column("isOriginalTitle")
     @ColDefine(type = ColType.BOOLEAN)
     private boolean isOriginalTitle;
 }

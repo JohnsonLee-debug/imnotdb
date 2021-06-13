@@ -140,4 +140,11 @@ public class TitleMapper {
         }
         return new QueryResult(titleList, pager);
     }
+    public QueryResult getAllTitle(int pageNumber, int pageSize){
+        Pager pager = dao.createPager(pageNumber, pageSize);
+        List<Title> titles = dao.query(Title.class,
+                Cnd.wrap("1=1"),
+                pager);
+        return new QueryResult(titles, pager);
+    }
 }

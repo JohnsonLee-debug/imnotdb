@@ -14,8 +14,8 @@ import org.nutz.dao.entity.annotation.Table;
 public class Ratings {
     @Name
     private String tconst;
-    @Column("averageRation")
-    private Double averageRation;
+    @Column("averageRating")
+    private Double averageRating;
     @Column("numVotes")
     private Integer numVotes;
 }

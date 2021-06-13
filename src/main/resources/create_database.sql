@@ -69,20 +69,24 @@ CREATE TABLE name(
     FULLTEXT (primaryName) WITH PARSER ngram
 );
 
-CREATE VIEW BigTable AS
-(SELECT
-     t.tconst, t.titleType, t.primaryTitle, t.originalTitle, t.isAdult, t.startYear, t.endYear, t.runtimeMinutes, t.genres,
-     r.averageRating, r.numVotes,
-     a.ordering, a.title, a.region, a.language, a.types, a.attributes, a.isOriginalTitle,
-     c.directors, c.writers,
-     p.nconst as principal_nconst, p.category, p.job, p.characters
-FROM
-    ((((title_basics as t
-        right outer join ratings r
-        on t.tconst = r.tconst)
-        right outer join title_akas as a
-        on t.tconst = a.tconst)
-        right outer join title_crew as c
-        on t.tconst = c.tconst))
-        right outer join title_principals as p
-                         on t.tconst = p.tconst);
+create table title_full (
+    `tconst` VARCHAR(20) NOT NULL ,
+    `titleType`VARCHAR(50),
+    `primaryTitle`VARCHAR(200),
+    `akaTitles` TEXT,
+    `isAdult` BOOLEAN,
+    `startYear` YEAR,
+    `endYear` YEAR,
+    `runtimeMinutes` INTEGER,
+    `genres` VARCHAR(200),
+    `actors` TEXT,
+    `directors` TEXT,
+    `writers` TEXT,
+    `averageRating` FLOAT,
+    primary key (tconst),
+    FULLTEXT (genres) WITH PARSER ngram,
+    FULLTEXT (akaTitles) WITH PARSER ngram,
+    FULLTEXT (actors) WITH PARSER ngram,
+    FULLTEXT (directors) WITH PARSER ngram,
+    Fulltext (writers) WITH PARSER ngram
+);
