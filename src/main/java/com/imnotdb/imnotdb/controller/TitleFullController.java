@@ -1,5 +1,6 @@
 package com.imnotdb.imnotdb.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.imnotdb.imnotdb.commons.PageJson;
 import com.imnotdb.imnotdb.pojo.Title;
 import com.imnotdb.imnotdb.service.TitleFullService;
@@ -7,9 +8,7 @@ import com.imnotdb.imnotdb.utils.SymbolTable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -22,6 +21,42 @@ import java.util.Map;
 public class TitleFullController {
     @Autowired
     private TitleFullService titleFullService;
+    @PostMapping("/searchWithJson")
+    @ResponseBody
+    public PageJson<Title> getTitleByCond(@RequestBody JSONObject param){
+        Integer pageNo = 0;
+        if(param.containsKey(SymbolTable.PAGENO)){
+            pageNo = (Integer) param.get(SymbolTable.PAGENO);
+        }else {
+            PageJson<Title> pageJson = new PageJson<Title>();
+            pageJson.setCode(-1);
+            pageJson.setMsg("Without page number");
+            return pageJson;
+        }
+        Integer size = 0;
+        if(param.containsKey(SymbolTable.SIZE)){
+            size = (Integer) param.get(SymbolTable.SIZE);
+        }else {
+            PageJson<Title> pageJson = new PageJson<Title>();
+            pageJson.setCode(-1);
+            pageJson.setMsg("Without page size.");
+            return pageJson;
+        }
+        Integer fetchAll = 0;
+        if(param.containsKey(SymbolTable.FETCHALL)){
+            fetchAll = (Integer) param.get(SymbolTable.FETCHALL);
+        }
+        try {
+            List<Title> titles = titleFullService.searchByCond(param, pageNo, size, fetchAll);
+            PageJson<Title> pageJson = new PageJson<>();
+            pageJson.setData(titles);
+            pageJson.setCount(titles.size());
+            return pageJson;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new PageJson<>();
+    }
     @GetMapping("/search")
     @ResponseBody
     public PageJson<Title> getTitleByCond(HttpServletRequest request){
