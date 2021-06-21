@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+  <title>修改电影</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+</head>
+
+<body class="bg-light">
+  <div class="container">
+    <form action="" class="needs-validation" novalidate>
+      <div class="form-row">
+        <input type="text" name="tconst" class="single-input d-none">
+        <div class="col-6 col-lg-3 form-group">
+          <label for="primaryTitle">primaryTitle:</label>
+          <input type="text" name="primaryTitle" id="primaryTitle" placeholder="please input primaryTitle"
+            class="form-control single-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="originalTitle">originalTitle:</label>
+          <input type="text" name="originalTitle" id="originalTitle" placeholder="please input originalTitle"
+            class="form-control single-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="startYear">startYear:</label>
+          <input type="number" name="startYear" id="startYear" placeholder="please input startYear"
+            class="form-control single-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="endYear">endYear:</label>
+          <input type="number" name="endYear" id="endYear" placeholder="please input endYear"
+            class="form-control single-input" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-6 col-lg-3 form-group">
+          <label for="runtimeMinutes">runtimeMinutes:</label>
+          <input type="number" name="runtimeMinutes" min="0" id="runtimeMinutes"
+            placeholder="please input runtimeMinutes" class="form-control single-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="genres">genres:</label>
+          <input type="text" name="genres" id="genres" placeholder="please input genres"
+            class="form-control single-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="averageRating">averageRating:</label>
+          <input type="number" name="averageRating" id="averageRating" min="0" max="10" step="0.1"
+            placeholder="please input averageRating" class="form-control rating-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="numVotes">numVotes:</label>
+          <input type="number" min="1" name="numVotes" id="numVotes" placeholder="please input numVotes"
+            class="form-control rating-input" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-6 col-lg-3 form-group">
+          <label for="directors">directors:</label>
+          <input type="text" name="directors" id="directors" placeholder="please input directors"
+            class="form-control crew-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="writers">writers:</label>
+          <input type="text" name="writers" id="writers" placeholder="please input writers"
+            class="form-control crew-input" required>
+        </div>
+        <div class="col-6 col-lg-3 form-group">
+          <label for="titleType">titleType:</label>
+          <select class="custom-select single-input" name="titleType" id="titleType" required>
+            <option selected disabled value="">please select a titleType</option>
+            <option value="short">short</option>
+            <option value="movie">movie</option>
+            <option value="tvShort">tvShort</option>
+            <option value="tvMovie">tvMovie</option>
+            <option value="tvSeries">tvSeries</option>
+            <option value="tvEpisode">tvEpisode</option>
+            <option value="tvMiniSeries">tvMiniSeries</option>
+            <option value="tvSpecial">tvSpecial</option>
+            <option value="video">video</option>
+            <option value="videoGame">videoGame</option>
+          </select>
+        </div>
+        <div class="form-group col-6 col-lg-3">
+          <label for="isAdult">isAdult:</label>
+          <select class="custom-select single-input" name="isAdult" id="isAdult" required>
+            <option selected disabled value="">please select isAdult</option>
+            <option value="1">yes</option>
+            <option value="0">no</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row form-group">
+        <h3>AkaTitles</h3>
+        <button class="btn btn-primary ml-2" type="button">Create</button>
+      </div>
+      <div class="form-row aka-group">
+        <div class="col-6 col-lg-3 form-group">
+          <input type="text" class="form-control aka-input" required>
+        </div>
+
+      </div>
+      <div class="principals-group">
+        <div class="form-row form-group">
+          <h3>Principals</h3>
+          <button class="btn btn-primary ml-2" type="button">Create</button>
+        </div>
+        <div class="form-row form-group">
+          <label class="col-form-label col-2 col-lg-1">NameID:</label>
+          <input type="text" placeholder="please input NameID" class="form-control nconst-input col-10 col-lg-4" required>
+          <label class="col-form-label  col-2 col-lg-1 offset-lg-1">Category:</label>
+          <input type="text" placeholder="please input Category" class="form-control category-input col-10 col-lg-5"
+            required>
+        </div>
+        
+      </div>
+      <div class="form-row justify-content-end">
+        <button type="submit" class="btn btn-primary mr-2">Update</button>
+        <button type="reset" class="btn btn-danger mr-2">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="../static/js/jquery-3.6.0.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+</body>
+
+</html>

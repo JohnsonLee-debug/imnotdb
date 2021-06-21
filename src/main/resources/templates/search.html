@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+  <title>imnotdb电影搜索器</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+  <style>
+    .middle {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-6 col-sm-3">
+          <label for="akaTitles" class="col-form-label font-weight-bold">电影名称</label>
+          <input type="text" class="form-control" name="akaTitles" id="akaTitles" placeholder="中文或英文名称">
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="directors" class="col-form-label font-weight-bold">导演</label>
+          <input type="text" class="form-control" name="directors" id="directors" placeholder="导演">
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="writers" class="col-form-label font-weight-bold">编剧</label>
+          <input type="text" class="form-control" name="writers" id="writers" placeholder="编剧">
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="actors" class="col-form-label font-weight-bold">演员</label>
+          <input type="text" class="form-control" name="actors" id="actors" placeholder="多演员输入如：张三，李四，王五">
+        </div>
+        <div class="from-group col-6 col-sm-3">
+          <label for="YEARGTE" class="col-form-label font-weight-bold">电影上映年份</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="YEARGTE" name="YEARGTE">
+            <div class="input-group-append input-group-prepend">
+              <span class="input-group-text">-</span>
+            </div>
+            <input type="text" class="form-control" id="YEARLTE" name="YEARLTE">
+          </div>
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="genres" class="col-form-label font-weight-bold">电影体裁</label>
+          <input type="text" class="form-control" name="genres" id="genres" placeholder="多体裁输入如：Animation,Comedy,Romance">
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="isAdult" class="col-form-label font-weight-bold">是否成人</label>
+          <select class="custom-select" name="isAdult" id="isAdult">
+            <option selected>请选择</option>
+            <option value="1">是</option>
+            <option value="0">否</option>
+          </select>
+        </div>
+        <div class="form-group col-6 col-sm-3">
+          <label for="titleType" class="col-form-label font-weight-bold">影片类别</label>
+          <select class="custom-select" name="titleType" id="titleType">
+            <option selected>请选择一个类别</option>
+            <option value="short">short</option>
+            <option value="movie">movie</option>
+            <option value="tvShort">tvShort</option>
+            <option value="tvMovie">tvMovie</option>
+            <option value="tvSeries">tvSeries</option>
+            <option value="tvEpisode">tvEpisode</option>
+            <option value="tvMiniSeries">tvMiniSeries</option>
+            <option value="tvSpecial">tvSpecial</option>
+            <option value="video">video</option>
+            <option value="videoGame">videoGame</option>
+          </select>
+        </div>
+        <div class="from-group col-6 col-sm-3">
+          <label for="RATINGGTE" class="col-form-label font-weight-bold">电影评分</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="RATINGGTE" name="RATINGGTE" placeholder="0">
+            <div class="input-group-append input-group-prepend">
+              <span class="input-group-text">-</span>
+            </div>
+            <input type="text" class="form-control" id="RATINGLTE" name="RATINGLTE" placeholder="10">
+          </div>
+        </div>
+        <div class="from-group col-6 col-sm-3">
+          <label for="LENGTHGTE" class="col-form-label font-weight-bold">电影长度</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="LENGTHGTE" name="LENGTHGTE" placeholder="分钟">
+            <div class="input-group-append input-group-prepend">
+              <span class="input-group-text">-</span>
+            </div>
+            <input type="text" class="form-control" id="LENGTHLTE" name="LENGTHLTE" placeholder="分钟">
+          </div>
+        </div>
+      </div>
+      <div class="form-row mt-4">
+        <div class="form-group col-sm-4">
+          <button type="submit" class="btn btn-primary w-100">搜索</button>
+        </div>
+        <div class="form-group col-sm-2">
+          <button type="reset" class="btn btn-info w-100">重置</button>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead class="thead-light text-nowrap">
+          <tr>
+            <th class="middle">电影名称</th>
+            <th class="middle">电影导演</th>
+            <th class="middle">电影演员</th>
+            <th class="middle">上映年份</th>
+            <th class="middle">影片类别</th>
+            <th class="middle">电影长度</th>
+            <th class="middle">电影评分</th>
+            <th class="middle">电影体裁</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="middle"><a href="/movieDetails?tconst=foo&fetchAll=1">The gold rush</a></td>
+            <td class="middle">查理·卓别林</td>
+            <td class="middle">查理·卓别林 ，佐治雅·凯尔，马科姆·威特</td>
+            <td class="middle">1925</td>
+            <td class="middle">Moive</td>
+            <td class="middle"><i class="fa fa-clock-o" aria-hidden="true"></i> 95</td>
+            <td class="middle"><i class="fa fa-star-o" aria-hidden="true"></i> 8.2</td>
+            <td class="middle">Comedy</td>
+          </tr>
+          <tr>
+            <td class="middle">The gold rush</td>
+            <td class="middle">查理·卓别林</td>
+            <td class="middle">查理·卓别林 ，佐治雅·凯尔，马科姆·威特</td>
+            <td class="middle">1925</td>
+            <td class="middle">Moive</td>
+            <td class="middle">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              95
+            </td>
+            <td class="middle">
+              <i class="fa fa-star-o"></i>
+               8.2</td>
+            <td class="middle">Comedy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a href="#" class="page-link">上一页</a></li>
+      <li class="page-item active"><span class="page-link">1</span></li>
+      <li class="page-item"><a href="#" class="page-link">下一页</a></li>
+    </ul>
+  </div>
+
+
+
+
+  <script>
+    fetch("/titleFull/search?akaTitles=你好&RATINGGTE=8.5&pageNo=1&size=2&fetchAll=1")
+      .then(res=>res.json())
+      .then(d=>console.log(d))
+      .catch(err=>console.log(err))
+  </script>
+  <script src="../static/js/jquery-3.6.0.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+</body>
+
+</html>

@@ -1,24 +1,20 @@
 package com.imnotdb.imnotdb.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.imnotdb.imnotdb.commons.PageJson;
 import com.imnotdb.imnotdb.pojo.Title;
 import com.imnotdb.imnotdb.service.TitleFullService;
 import com.imnotdb.imnotdb.utils.SymbolTable;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/titleFull")
@@ -26,14 +22,14 @@ import java.util.concurrent.Callable;
 public class TitleFullController {
     @Autowired
     private TitleFullService titleFullService;
-    @RequestMapping(value = "/search", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @GetMapping("/search")
     @ResponseBody
     public PageJson<Title> getTitleByCond(HttpServletRequest request){
         HashMap<String, Object> param = new HashMap<>();
         constructParam(request, param);
-        Integer from = 0;
+        Integer pageNo = 0;
         if(param.containsKey(SymbolTable.PAGENO)){
-            from = (Integer) param.get(SymbolTable.FROM);
+            pageNo = (Integer) param.get(SymbolTable.PAGENO);
         }else {
             PageJson<Title> pageJson = new PageJson<Title>();
             pageJson.setCode(-1);
@@ -54,7 +50,7 @@ public class TitleFullController {
             fetchAll = (Integer) param.get(SymbolTable.FETCHALL);
         }
         try {
-            List<Title> titles = titleFullService.searchByCond(param, from, size, fetchAll);
+            List<Title> titles = titleFullService.searchByCond(param, pageNo, size, fetchAll);
             PageJson<Title> pageJson = new PageJson<Title>();
             pageJson.setData(titles);
             pageJson.setCount(titles.size());
@@ -73,11 +69,17 @@ public class TitleFullController {
                 param.put(SymbolTable.SIZE, Integer.valueOf(s));
             }
         }
-        if (conditions.containsKey(SymbolTable.PAGENO)){
+        if (conditions.containsKey(SymbolTable.FETCHALL)){
+            String[] strings = conditions.get(SymbolTable.FETCHALL);
+            String s = strings[0];
+            if(s != null){
+                param.put(SymbolTable.FETCHALL, Integer.valueOf(s));
+            }
+        }if (conditions.containsKey(SymbolTable.PAGENO)){
             String[] strings = conditions.get(SymbolTable.PAGENO);
             String s = strings[0];
             if(s != null){
-                param.put(SymbolTable.SIZE, Integer.valueOf(s));
+                param.put(SymbolTable.PAGENO, Integer.valueOf(s));
             }
         }
         if (conditions.containsKey(SymbolTable.AKASTITLES)){

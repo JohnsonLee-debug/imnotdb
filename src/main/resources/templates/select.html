@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+  <title>imnotdb后台管理系统</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.css">
+
+
+</head>
+
+<body class="bg-light">
+  <div class="container">
+    <div class="row">
+      <h2>电影管理</h2>
+      <a href="#" class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 align-self-center">新增电影</a>
+    </div>
+    <div class="row">
+
+      <div class="col-6 align-self-end">
+        <label for="tconst">电影ID：</label>
+        <input type="text" name="tconst" id="tconst" placeholder="请输入电影ID">
+      </div>
+
+      <button type="button" class="btn btn-info mr-2">修改电影信息</button>
+      <button type="button" class="btn btn-danger">删除电影</button>
+    </div>
+    <div class="row mt-5">
+      <h2>人员管理</h2>
+      <button type="button" class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 mt-1" data-toggle="modal"
+      data-target="#insertModal">新增人员</button>
+    </div>
+
+    <div class="row">
+
+      <div class="col-6 align-self-end">
+        <label for="nconst">人员ID：</label>
+        <input type="text" name="nconst" id="nconst" placeholder="请输入人员ID">
+      </div>
+      <button type="button" class="btn btn-info mr-2" data-toggle="modal"
+      data-target="#modifiedModal">修改人员信息</button>
+      <button type="button" class="btn btn-danger">删除人员</button>
+    </div>
+    <div class="row mt-5">
+      <h2>人员ID搜索器</h2>
+    </div>
+    <div class="row">
+      <div class="col-6 align-self-end">
+        <label for="nconst">人员名称：</label>
+        <input type="text" name="nconst" id="nconst" placeholder="必须输入人员准确名称">
+      </div>
+      <button type="button" class="btn btn-primary">搜索人员名称</button>
+    </div>
+    <div class="row result">
+      <p class="col-4 offset-2 align-self-end mt-2">此人员ID为：<span id="returnNconst">nm0000089</span></p>
+    </div>
+  </div>
+  <!-- 新增人员弹出的模态框 -->
+  <div class="modal fade" id="insertModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>新增人员</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form action="" class="needs-validation" novalidate>
+            <div class="form-group form-row">
+              <label for="primaryName" class="col-form-label col-3">姓名：</label>
+              <input type="text" class="form-control col-9" required name="primaryName" id="primaryName">
+            </div>
+            <div class="form-group form-row">
+              <label for="birthYear" class="col-form-label col-3">出生年份：</label>
+              <input type="number" class="form-control col-9" name="birthYear" id="birthYear">
+            </div>
+            <div class="form-group form-row">
+              <label for="deathYear" class="col-form-label col-3">死亡年份：</label>
+              <input type="number" class="form-control col-9" name="deathYear" id="deathYear">
+            </div>
+            <div class="form-group form-row">
+              <label for="primaryProfession" class="col-form-label col-3">主要职业：</label>
+              <input type="text" class="form-control col-9" required name="primaryProfession" id="primaryProfession">
+            </div>
+            <div class="form-group form-row">
+              <label for="knownForTitles" class="col-form-label col-3">代表作ID：</label>
+              <input type="text" class="form-control col-9"  name="knownForTitles" id="knownForTitles" placeholder="如：tt0036723,tt0035103,tt0040525">
+            </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">确认保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 修改人员弹出的模态框 -->
+  <div class="modal fade" id="modifiedModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>修改人员</h5>
+          <button class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form action="" class="needs-validation" novalidate>
+            <input type="text" name="nconst" id="nconst" class="modified-input d-none">
+            <div class="form-group form-row">
+              <label for="primaryName1" class="col-form-label col-3">姓名：</label>
+              <input type="text" class="form-control col-9" required name="primaryName" id="primaryName1">
+            </div>
+            <div class="form-group form-row">
+              <label for="birthYear1" class="col-form-label col-3">出生年份：</label>
+              <input type="number" class="form-control col-9" name="birthYear" id="birthYear1">
+            </div>
+            <div class="form-group form-row">
+              <label for="deathYear1" class="col-form-label col-3">死亡年份：</label>
+              <input type="number" class="form-control col-9" name="deathYear" id="deathYear1">
+            </div>
+            <div class="form-group form-row">
+              <label for="primaryProfession1" class="col-form-label col-3">主要职业：</label>
+              <input type="text" class="form-control col-9" required name="primaryProfession" id="primaryProfession1">
+            </div>
+            <div class="form-group form-row">
+              <label for="knownForTitles1" class="col-form-label col-3">代表作ID：</label>
+              <input type="text" class="form-control col-9"  name="knownForTitles" id="knownForTitles1" placeholder="如：tt0036723,tt0035103,tt0040525">
+            </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">确认保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../static/js/jquery-3.6.0.min.js"></script>
+  <script src="../static/js/bootstrap.js"></script>
+</body>
+
+</html>
