@@ -6,14 +6,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
-    @RequestMapping(value = {"/index","/"})
-    public String index(){
+    @RequestMapping(value = {"/index", "/"})
+    public String index() {
         return "search";
     }
+
     @RequestMapping(value = "/movieDetails")
-    public String details(@RequestParam String tconst, @RequestParam Integer fetchAll){
+    public String details(@RequestParam String tconst, @RequestParam Integer fetchAll) {
         return "movieDetails";
     }
-//    @RequestMapping(value = "/favicon.ico")
-//    public String favicon() {return "static/favicon.ico";}
+
+    @RequestMapping(value = "/backstage")
+    public String backstage() {
+        return "select";
+    }
+    @RequestMapping(value = "/insertMovie")
+    public String insert(){
+        return "insertMovie";
+    }
+    @RequestMapping(value = "updateMovie")
+    public String update(@RequestParam String tconst){
+        return  "updateMovie";
+    }
 }
