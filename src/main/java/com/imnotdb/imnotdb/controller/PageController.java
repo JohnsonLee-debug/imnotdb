@@ -14,4 +14,6 @@ public class PageController {
     public String details(@RequestParam String tconst, @RequestParam Integer fetchAll){
         return "movieDetails";
     }
+//    @RequestMapping(value = "/favicon.ico")
+//    public String favicon() {return "static/favicon.ico";}
 }
