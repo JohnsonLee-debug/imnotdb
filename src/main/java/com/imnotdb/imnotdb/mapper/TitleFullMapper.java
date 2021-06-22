@@ -6,6 +6,7 @@ import com.imnotdb.imnotdb.pojo.Title;
 import com.imnotdb.imnotdb.pojo.TitleFull;
 import com.imnotdb.imnotdb.utils.BigTableTransformer;
 import com.imnotdb.imnotdb.utils.SymbolTable;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -23,6 +24,7 @@ import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.nutz.dao.impl.NutDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -35,12 +37,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class TitleFullMapper {
     @Autowired
     @Qualifier(SymbolTable.ESCLIENT)
     private RestHighLevelClient esClient;
     @Autowired
     private TitleMapper titleMapper;
+    @Autowired
+    private NutDao nutDao;
     @Autowired
     private BigTableTransformer bigTableTransformer;
     public TitleFull getTitleFullByTconst(String tconst){
@@ -63,6 +68,9 @@ public class TitleFullMapper {
         }
         return null;
     }
+    private boolean isPureAlpha(String s){
+        return s.matches("^[a-zA-Z \t]*");
+    }
     public String[] getTitleByCnds(Map<String, Object> conditions, int pageNo, int size) {
         if(pageNo <= 0){
             pageNo = 1;
@@ -70,8 +78,14 @@ public class TitleFullMapper {
         SearchRequest searchRequest = new SearchRequest(SymbolTable.TITLEFULL);
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         if (conditions.containsKey(SymbolTable.AKASTITLES)){
-            boolQueryBuilder.must(QueryBuilders.matchQuery(SymbolTable.AKASTITLES,
-                    conditions.get(SymbolTable.AKASTITLES)));
+            String s = (String) conditions.get(SymbolTable.AKASTITLES);
+            if(isPureAlpha(s)){
+                boolQueryBuilder.must(QueryBuilders.matchQuery(SymbolTable.PRIMARYTITLE,
+                        s));
+            }else {
+                boolQueryBuilder.must(QueryBuilders.matchQuery(SymbolTable.AKASTITLES,
+                        s));
+            }
         }
         if (conditions.containsKey(SymbolTable.DIRECTOR)){
             boolQueryBuilder.must(QueryBuilders.matchQuery(SymbolTable.DIRECTOR,
@@ -176,10 +190,18 @@ public class TitleFullMapper {
             e.printStackTrace();
         }
     }
+    // 让mysql内的titleFull和其他数据同福
+    public void syncTitleFull(String tconst){
+        Title title = titleMapper.getTitleByTconst(tconst);
+        titleMapper.fetchAllLinks(title);
+        TitleFull titleFull = bigTableTransformer.titleToFull(title);
+        nutDao.update(titleFull);
+    }
     public void syncDataWithMySQL(String tconst){
         Title title = titleMapper.getTitleByTconst(tconst);
         titleMapper.fetchAllLinks(title);
         TitleFull titleFull = bigTableTransformer.titleToFull(title);
+        nutDao.update(titleFull);
         updateTitleFullInES(titleFull);
     }
 }

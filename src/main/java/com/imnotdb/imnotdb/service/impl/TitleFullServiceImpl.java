@@ -22,72 +22,37 @@ public class TitleFullServiceImpl implements TitleFullService {
     private TitleMapper titleMapper;
     @Override
     public List<Title> searchByCond(Map<String, Object> conditions, int pageNo, int size, Integer fetchAll) throws ClassCastException{
-        if (conditions.containsKey(SymbolTable.AKASTITLES)){
-            if(!(conditions.get(SymbolTable.AKASTITLES) instanceof String)){
-                throw new ClassCastException("Title name should be String");
-            }
-        }
-        if (conditions.containsKey(SymbolTable.DIRECTOR)){
-            if(!(conditions.get(SymbolTable.DIRECTOR) instanceof String)){
-                throw new ClassCastException("Director name should be String");
-            }
-        }
-        if (conditions.containsKey(SymbolTable.WRITER)){
-            if(!(conditions.get(SymbolTable.WRITER) instanceof String)){
-                throw new ClassCastException("Writer name should be String");
-            }
-        }
-        if (conditions.containsKey(SymbolTable.ACTOR)){
-            if(!(conditions.get(SymbolTable.ACTOR) instanceof String)){
-                throw new ClassCastException("Actor name should be String");
-            }
-        }
-        if (conditions.containsKey(SymbolTable.TITLETYPE)){
-            if(!(conditions.get(SymbolTable.TITLETYPE) instanceof String)){
-                throw new ClassCastException("Title type should be String");
-            }
-        }
-        if (conditions.containsKey(SymbolTable.GENRES)){
-            if(!(conditions.get(SymbolTable.GENRES) instanceof String)){
-                throw new ClassCastException("Title genres should be String");
-            }
-        }
         if (conditions.containsKey(SymbolTable.ISADULT)){
-            if(!((conditions.get(SymbolTable.ISADULT) instanceof Integer)
-            && ((Integer) conditions.get(SymbolTable.ISADULT) == 1
-            || (Integer) conditions.get(SymbolTable.ISADULT) == 0))){
+            Integer isAdult = Integer.valueOf((String) conditions.get(SymbolTable.ISADULT));
+            if(isAdult != 0 && isAdult != 1){
                 conditions.put(SymbolTable.ISADULT, 0);
+            }else{
+                conditions.put(SymbolTable.ISADULT, isAdult);
             }
         }
         if (conditions.containsKey(SymbolTable.YEAR_GTE)){
-            if(!(conditions.get(SymbolTable.YEAR_GTE) instanceof Integer)){
-                throw new ClassCastException("Year lower bound should be Integer");
-            }
+            Integer yearGTE = Integer.valueOf((String) conditions.get(SymbolTable.YEAR_GTE));
+            conditions.put(SymbolTable.YEAR_GTE, yearGTE);
         }
         if (conditions.containsKey(SymbolTable.YEAR_LTE)){
-            if(!(conditions.get(SymbolTable.YEAR_LTE) instanceof Integer)){
-                throw new ClassCastException("Year upper bound should be Integer");
-            }
+            Integer yearLTE = Integer.valueOf((String) conditions.get(SymbolTable.YEAR_LTE));
+            conditions.put(SymbolTable.YEAR_LTE, yearLTE);
         }
         if (conditions.containsKey(SymbolTable.RATING_GTE)){
-            if(!(conditions.get(SymbolTable.RATING_GTE) instanceof Double)){
-                throw new ClassCastException("Rating lower bound should be Double");
-            }
+            Double ratingGTE = Double.valueOf((String) conditions.get(SymbolTable.RATING_GTE));
+            conditions.put(SymbolTable.RATING_GTE, ratingGTE);
         }
         if (conditions.containsKey(SymbolTable.RATING_LTE)){
-            if(!(conditions.get(SymbolTable.RATING_LTE) instanceof Double)){
-                throw new ClassCastException("Rating upper bound should be Double");
-            }
+            Double ratingLTE = Double.valueOf((String) conditions.get(SymbolTable.RATING_LTE));
+            conditions.put(SymbolTable.RATING_LTE, ratingLTE);
         }
         if (conditions.containsKey(SymbolTable.LENGTH_GTE)){
-            if(!(conditions.get(SymbolTable.LENGTH_GTE) instanceof Integer)){
-                throw new ClassCastException("Title name should be String");
-            }
+            Integer lengthGTE = Integer.valueOf((String) conditions.get(SymbolTable.LENGTH_GTE));
+            conditions.put(SymbolTable.LENGTH_GTE, lengthGTE);
         }
         if (conditions.containsKey(SymbolTable.LENGTH_LTE)){
-            if(!(conditions.get(SymbolTable.LENGTH_LTE) instanceof Integer)){
-                throw new ClassCastException("RuntimeMinute upper bound should be Integer");
-            }
+            Integer lengthLTE = Integer.valueOf((String) conditions.get(SymbolTable.LENGTH_LTE));
+            conditions.put(SymbolTable.LENGTH_LTE, lengthLTE);
         }
         String[] tconstArr = titleFullMapper.getTitleByCnds(conditions, pageNo, size);
         Stream<Title> titleStream = Arrays.stream(tconstArr)
