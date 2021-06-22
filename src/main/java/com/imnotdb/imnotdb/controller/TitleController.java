@@ -35,7 +35,7 @@ public class TitleController {
         return new JsonResult().setOk();
     }
     @ResponseBody
-    @GetMapping
+    @GetMapping("/delete")
     public JsonResult delete(@RequestParam String tconst){
         titleService.deleteTitle(tconst);
         return new JsonResult().setOk();
