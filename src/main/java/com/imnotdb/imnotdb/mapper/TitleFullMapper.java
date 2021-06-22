@@ -123,7 +123,7 @@ public class TitleFullMapper {
         }
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(boolQueryBuilder);
-        searchSourceBuilder.from(pageNo);
+        searchSourceBuilder.from((pageNo - 1) * size);
         searchSourceBuilder.size(size);
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
         searchRequest.source(searchSourceBuilder);

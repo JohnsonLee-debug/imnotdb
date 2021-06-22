@@ -89,7 +89,7 @@ public class TitleFullServiceImpl implements TitleFullService {
                 throw new ClassCastException("RuntimeMinute upper bound should be Integer");
             }
         }
-        String[] tconstArr = titleFullMapper.getTitleByCnds(conditions, (pageNo - 1)*size, size);
+        String[] tconstArr = titleFullMapper.getTitleByCnds(conditions, pageNo, size);
         Stream<Title> titleStream = Arrays.stream(tconstArr)
                 .map((x -> titleMapper.getTitleByTconst(x)));
         List<Title> titleList = titleStream.collect(Collectors.toList());
