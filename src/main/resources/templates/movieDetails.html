@@ -9,49 +9,124 @@
   <link rel="stylesheet" href="../static/css/bootstrap.css">
 
   <style>
-    .lib-header-seperator {
-      height: 2px;
-      width: 52px;
-      background-color: #fff;
-      margin: 7px 0;
-    }
+      .lib-header-seperator {
+          height: 2px;
+          width: 52px;
+          background-color: #fff;
+          margin: 7px 0;
+      }
   </style>
 </head>
 
 <body class="bg-light">
-  <div class="container  bg-dark">
-    <div class="row">
-      <div class="col-sm-6 col-lg-4 img-section">
-        <img
-          src="https://m.media-amazon.com/images/M/MV5BMGRjMzY0OGItNDc4YS00OGNlLWI3MGYtZjRkNjdiNWUyNDY4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg"
-          alt="电影海报" class="img-fluid">
-      </div>
-      <div class="col-sm-6 col-lg-4 text-white">
-        <h2 id="title">Shooter</h2>
-        <div class="lib-header-seperator"></div>
-        <p>影片类别：<span id="titleType">Movie</span></p>
-        <p>电影体裁：<span id="genres">Action, Drama, Thriller</span></p>
-        <p>是否成人：<span id="isAdult">是</span></p>
-        <p>电影上映年份：<span id="startYear">2011</span></p>
-        <p>电影长度：<span id="length">95</span>分钟</p>
-        <a href="file:///E:/html_code/search.html" class="btn btn-primary" >返回首页</a>
-        <a href="https://www.imdb.com/title/tt0822854/" class="btn btn-warning">跳转至IMDB</a>
-      </div>
-
-      <div class="col-sm-6 col-lg-4 text-white">
-        <h2 id="rating">评分：7.5</h2>
-        <div class="lib-header-seperator"></div>
-        <p>导演：<span id="directors">安东尼·福奎阿</span></p>
-        <p>编剧：<span id="writers">乔纳森·勒姆金 / 史蒂芬·亨特</span></p>
-        <p>演员：<span id="actors">马克·沃尔伯格 / 迈克尔·佩纳 / 丹尼·格洛弗 / 凯特·玛拉 / 伊莱亚斯·科泰斯</span></p>
-      </div>
+<div class="container  bg-dark">
+  <div class="row">
+    <div class="col-sm-6 col-lg-4 img-section">
+      <img alt="电影海报" class="img-fluid">
     </div>
-    
+    <div class="col-sm-6 col-lg-4 text-white">
+      <h2 id="title">Shooter</h2>
+      <div class="lib-header-seperator"></div>
+      <p>影片类别：<span id="titleType"></span></p>
+      <p>影片体裁：<span id="genres"></span></p>
+      <p>是否成人：<span id="isAdult"></span></p>
+      <p>影片上映年份：<span id="startYear"></span></p>
+      <p>影片长度：<span id="length"></span>分钟</p>
+      译名：<br>
+      <p style="height:auto; overflow:auto;max-height: 200px" id="aka-titles"></p>
+      <a href="/" class="btn btn-primary">返回首页</a>
+      <a href="https://www.imdb.com/title/tt0822854/" class="btn btn-warning" id="imdb-btn">跳转至IMDB</a>
+    </div>
+
+    <div class="col-sm-6 col-lg-4 text-white">
+      <h2>评分：<span id="rating">7.5</span></h2>
+      <div class="lib-header-seperator"></div>
+      <p>导演：<span id="directors">安东尼·福奎阿</span></p>
+      <p>编剧：<span id="writers">乔纳森·勒姆金 / 史蒂芬·亨特</span></p>
+      <p>演员：<span id="actors">马克·沃尔伯格 / 迈克尔·佩纳 / 丹尼·格洛弗 / 凯特·玛拉 / 伊莱亚斯·科泰斯</span></p>
+      <p style="height:auto; overflow:auto;max-height: 300px">剧情简介：<span id="plot"></span></p>
+    </div>
   </div>
 
+</div>
 
-  <script src="../static/js/jquery-3.6.0.min.js"></script>
-  <script src="../static/js/bootstrap.js"></script>
+<script src="../static/js/axios.min.js"></script>
+<script>
+  const tconst = getQueryVariable("tconst")
+  const jsonSend = axios.create({
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  window.addEventListener('DOMContentLoaded', function () {
+    getMoviePoster()
+    getMovieInfo()
+    let imdb_btn = document.getElementById("imdb-btn")
+    imdb_btn.href = `https://www.imdb.com/title/${tconst}/`
+  })
+
+  function getQueryVariable(variable) {
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split("=");
+      if (pair[0] === variable) {
+        return pair[1];
+      }
+    }
+    return "";
+  }
+
+  function getMovieInfo() {
+    jsonSend.get(`/title/getTitleByTconst?tconst=${tconst}&fetchAll=1`)
+        .then(res => {
+          console.log(res.data)
+          let data = res.data.data[0]
+          let title = document.getElementById("title")
+          let titleType = document.getElementById("titleType")
+          let genres = document.getElementById("genres")
+          let isAdult = document.getElementById("isAdult")
+          let startYear = document.getElementById("startYear")
+          let length = document.getElementById("length")
+          let aka_titles = document.getElementById("aka-titles")
+          let rating = document.getElementById("rating")
+          let directors = document.getElementById("directors")
+          let writers = document.getElementById("writers")
+          title.innerText = data.primaryTitle
+          titleType.innerText = data.titleType
+          genres.innerText = data.genres
+          isAdult.innerText = data.isAdult === 0 ? "否" : "是"
+          startYear.innerText = data.startYear
+          length.innerText = data.runtimeMinutes == null ? "暂无" : data.runtimeMinutes
+          rating.innerText = data.rating == null ? "暂无" : data.rating.averageRating
+          axios.get(`/name/getByNconstList?nconstList=${data.crew.directors}`)
+              .then(res => directors.innerHTML = res.data.msg)
+          axios.get(`/name/getByNconstList?nconstList=${data.crew.writers}`)
+              .then(res => writers.innerHTML = res.data.msg)
+          if (data.akas !== null)
+          data.akas.forEach(elem=>{
+            aka_titles.innerHTML += `${elem.title}(${elem.region === null ? "original" : elem.region})<br>`
+          })
+
+
+        })
+  }
+
+  function getMoviePoster() {
+    axios.get(`https://www.omdbapi.com/?i=${tconst}&apikey=887d0242&plot=full`)
+        .then(res => {
+          let img = document.getElementsByTagName("img")[0]
+          let actors = document.getElementById("actors")
+          let plot = document.getElementById("plot")
+          img.src = res.data.Poster
+          actors.innerText = res.data.Actors
+          plot.innerText = res.data.Plot
+        })
+  }
+</script>
+
+<script src="../static/js/jquery-3.6.0.min.js"></script>
+<script src="../static/js/bootstrap.js"></script>
 </body>
 
 </html>
