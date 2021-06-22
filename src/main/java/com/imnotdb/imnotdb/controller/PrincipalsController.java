@@ -4,13 +4,12 @@ import com.imnotdb.imnotdb.commons.PageJson;
 import com.imnotdb.imnotdb.pojo.Principals;
 import com.imnotdb.imnotdb.service.PrincipalsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.LinkedList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/principals")
 public class PrincipalsController {
     @Autowired

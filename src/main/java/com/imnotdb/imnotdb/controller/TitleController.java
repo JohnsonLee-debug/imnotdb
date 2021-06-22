@@ -5,11 +5,9 @@ import com.imnotdb.imnotdb.commons.PageJson;
 import com.imnotdb.imnotdb.pojo.Title;
 import com.imnotdb.imnotdb.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/title")
 public class TitleController {
     @Autowired
@@ -35,7 +33,7 @@ public class TitleController {
         return new JsonResult().setOk();
     }
     @ResponseBody
-    @GetMapping
+    @GetMapping("/delete")
     public JsonResult delete(@RequestParam String tconst){
         titleService.deleteTitle(tconst);
         return new JsonResult().setOk();

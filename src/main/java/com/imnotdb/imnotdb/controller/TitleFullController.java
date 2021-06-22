@@ -7,7 +7,6 @@ import com.imnotdb.imnotdb.service.TitleFullService;
 import com.imnotdb.imnotdb.utils.SymbolTable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/titleFull")
 @Slf4j
 public class TitleFullController {
