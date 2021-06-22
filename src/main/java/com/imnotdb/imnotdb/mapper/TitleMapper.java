@@ -40,7 +40,7 @@ public class TitleMapper {
         nutDao.fetchLinks(title, "akas");
         nutDao.fetchLinks(title, "crew");
         nutDao.fetchLinks(title, "principals");
-        nutDao.fetchLinks(title, "ratings");
+        nutDao.fetchLinks(title, "rating");
     }
     public void insertTitle(@NotNull Title title){
         if(title == null){

@@ -54,9 +54,9 @@ public class TitleFullServiceImpl implements TitleFullService {
         }
         if (conditions.containsKey(SymbolTable.ISADULT)){
             if(!((conditions.get(SymbolTable.ISADULT) instanceof Integer)
-            && (Integer) conditions.get(SymbolTable.ISADULT) == 1
-            && (Integer) conditions.get(SymbolTable.ISADULT) == 0)){
-                throw new ClassCastException("IsAdult must be 1 or 0.");
+            && ((Integer) conditions.get(SymbolTable.ISADULT) == 1
+            || (Integer) conditions.get(SymbolTable.ISADULT) == 0))){
+                conditions.put(SymbolTable.ISADULT, 0);
             }
         }
         if (conditions.containsKey(SymbolTable.YEAR_GTE)){
