@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/name")
@@ -25,7 +26,7 @@ public class NameController {
     }
     @ResponseBody
     @GetMapping("/getNameByNconst")
-    public PageJson getNameByNconst(@RequestParam String nconst){
+    public PageJson getNameByNconst(@RequestParam String nconst) {
         PageJson<Name> pageJson = new PageJson<>();
         Name name = nameService.getNameByNconst(nconst);
         ArrayList<Name> names = new ArrayList<>();
@@ -35,15 +36,38 @@ public class NameController {
         pageJson.setMsg("");
         return pageJson;
     }
+
+    @ResponseBody
+    @GetMapping("/searchByName")
+    public PageJson<Name> searchByName(@RequestParam String name) {
+        PageJson<Name> pageJson = new PageJson<>();
+        List<Name> names = nameService.getNameByName(name);
+        pageJson.setData(names);
+        pageJson.setCode(0);
+        pageJson.setMsg("");
+        return pageJson;
+    }
+
+    @ResponseBody
+    @GetMapping("/getKnownForTitlesOf")
+    public JsonResult getKnownForTitle(@RequestParam String nconst) {
+        JsonResult jsonResult = new JsonResult();
+        String knownForTitleOf = nameService.getKnownForTitleOf(nconst);
+        jsonResult.setOk();
+        jsonResult.set("titles", knownForTitleOf);
+        return jsonResult;
+    }
+
     @ResponseBody
     @GetMapping("/delete")
-    public JsonResult deleteByNconst(@RequestParam String nconst){
+    public JsonResult deleteByNconst(@RequestParam String nconst) {
         nameService.deleteDeleteNameByNconst(nconst);
         return new JsonResult().setOk();
     }
+
     @ResponseBody
     @PostMapping("/update")
-    public JsonResult update(@RequestBody Name name){
+    public JsonResult update(@RequestBody Name name) {
         nameService.updateName(name);
         return new JsonResult().setOk();
     }
