@@ -58,6 +58,9 @@ public class NameServiceImpl implements NameService {
     @Override
     public String getKnownForTitleOf(String nconst) {
         List<Title> knownForTitlesOfAPerson = nameMapper.getKnownForTitlesOfAPerson(nconst);
+        if (knownForTitlesOfAPerson.size() == 0) {
+            return "";
+        }
         String knownFor = knownForTitlesOfAPerson.stream().map(x -> x.getPrimaryTitle()).collect(Collectors.joining("<br/>"));
         return knownFor;
     }

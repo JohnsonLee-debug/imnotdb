@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,9 +64,12 @@ public class NameMapper {
         name.setNconst(nconst);
         nutDao.insert(name);
     }
-    public List<Title> getKnownForTitlesOfAPerson(String nconst){
+    public List<Title> getKnownForTitlesOfAPerson(String nconst) {
         Name nameByNconst = nutDao.fetch(Name.class, nconst);
         String knownForTitles = nameByNconst.getKnownForTitles();
+        if (knownForTitles == null || knownForTitles.isEmpty()) {
+            return new LinkedList<>();
+        }
         String[] split = knownForTitles.split(",");
         String collect = Arrays.stream(split)
                 .map(x -> String.format("'%s'", x))
