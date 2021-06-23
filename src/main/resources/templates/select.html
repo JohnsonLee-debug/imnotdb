@@ -27,10 +27,10 @@
 
     <div class="col-6 align-self-end">
       <label for="tconst">电影ID：</label>
-      <input type="text" name="tconst" id="tconst" placeholder="请输入电影ID">
+      <input type="text" name="tconst" id="tconst" placeholder="请输入电影ID" onchange="updateMovieButton()">
     </div>
 
-    <button type="button" class="btn btn-info mr-2" id="updateMovie-btn">修改电影信息</button>
+    <a class="btn btn-info mr-2" id="updateMovie-btn" href="#">修改电影信息</a>
     <button type="button" class="btn btn-danger" onclick="deleteMovie()">删除电影</button>
   </div>
   <!-- <div class="row mt-3 alert alert-danger alert-dismissible fade show" role="alert">
@@ -114,11 +114,11 @@
             </div>
             <div class="form-group form-row">
               <label for="birthYear" class="col-form-label col-3">出生年份：</label>
-              <input type="number" class="form-control col-9 insert-input" name="birthYear" id="birthYear">
+              <input type="number" class="form-control col-9 insert-input" name="birthYear" id="birthYear" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="deathYear" class="col-form-label col-3">死亡年份：</label>
-              <input type="number" class="form-control col-9 insert-input" name="deathYear" id="deathYear">
+              <input type="number" class="form-control col-9 insert-input" name="deathYear" id="deathYear" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="primaryProfession" class="col-form-label col-3">主要职业：</label>
@@ -162,11 +162,11 @@
             </div>
             <div class="form-group form-row">
               <label for="birthYear1" class="col-form-label col-3">出生年份：</label>
-              <input type="number" class="form-control col-9 update-input" name="birthYear" id="birthYear1">
+              <input type="number" class="form-control col-9 update-input" name="birthYear" id="birthYear1" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="deathYear1" class="col-form-label col-3">死亡年份：</label>
-              <input type="number" class="form-control col-9 update-input" name="deathYear" id="deathYear1">
+              <input type="number" class="form-control col-9 update-input" name="deathYear" id="deathYear1" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="primaryProfession1" class="col-form-label col-3">主要职业：</label>
@@ -193,13 +193,6 @@
     headers: {
       "Content-Type": "application/json"
     }
-  })
-  window.addEventListener('DOMContentLoaded', function () {
-    document.getElementById("updateMovie-btn").addEventListener("click", () => {
-      let tconst = document.getElementById("tconst").value
-      if (tconst !== "")
-        window.location.href = `updateMovie?tconst=${tconst}`
-    })
   })
 
   function deleteMovie() {
@@ -336,6 +329,12 @@
             tbody.appendChild(tr)
           })
         })
+  }
+  function updateMovieButton(){
+    let tconst = document.getElementById("tconst").value
+    let update_btn = document.getElementById("updateMovie-btn")
+    if(tconst !== '')
+      update_btn.href = `updateMovie?tconst=${tconst}`
   }
 </script>
 <script src="../static/js/jquery-3.6.0.min.js"></script>

@@ -13,7 +13,7 @@
 
 <body class="bg-light">
   <div class="container">
-    <form action="" class="needs-validation" novalidate>
+    <form action="" class="needs-validation">
       <div class="form-row">
         <div class="col-6 col-lg-3 form-group">
           <label for="primaryTitle">primaryTitle:</label>
@@ -27,12 +27,12 @@
         </div>
         <div class="col-6 col-lg-3 form-group">
           <label for="startYear">startYear:</label>
-          <input type="number" name="startYear" id="startYear" placeholder="please input startYear"
+          <input type="number" name="startYear" id="startYear" placeholder="please input startYear" min="1901" max="2155"
             class="form-control single-input" required>
         </div>
         <div class="col-6 col-lg-3 form-group">
           <label for="endYear">endYear:</label>
-          <input type="number" name="endYear" id="endYear" placeholder="please input endYear"
+          <input type="number" name="endYear" id="endYear" placeholder="please input endYear" min="1901" max="2155"
             class="form-control single-input" required>
         </div>
       </div>
@@ -60,13 +60,13 @@
       </div>
       <div class="form-row">
         <div class="col-6 col-lg-3 form-group">
-          <label for="directors">directors:</label>
-          <input type="text" name="directors" id="directors" placeholder="please input directors"
+          <label for="directors">directorsID:</label>
+          <input type="text" name="directors" id="directors" placeholder="please input directorsID"
             class="form-control crew-input" required>
         </div>
         <div class="col-6 col-lg-3 form-group">
-          <label for="writers">writers:</label>
-          <input type="text" name="writers" id="writers" placeholder="please input writers"
+          <label for="writers">writersID:</label>
+          <input type="text" name="writers" id="writers" placeholder="please input writersID"
             class="form-control crew-input" required>
         </div>
         <div class="col-6 col-lg-3 form-group">
@@ -96,35 +96,44 @@
       </div>
       <div class="form-row form-group">
         <h3>AkaTitles</h3>
-        <button class="btn btn-primary ml-2" type="button">Create</button>
+        <button class="btn btn-primary ml-2" type="button" onclick="insertAkaTitle()">Create</button>
       </div>
-      <div class="form-row aka-group">
-        <div class="col-6 col-lg-3 form-group">
-          <input type="text" class="form-control aka-input" required>
-        </div>
 
-      </div>
-      <div class="principals-group">
-        <div class="form-row form-group">
-          <h3>Principals</h3>
-          <button class="btn btn-primary ml-2" type="button">Create</button>
+      <div id="aka-group" style="height:auto; overflow:auto;max-height: 400px">
+<!--        <div class="col-6 col-lg-3 form-group">-->
+<!--          <input type="text" class="form-control aka-input" required>-->
+<!--        </div>-->
+        <div class="form-row form-group" style="max-width: 99%">
+          <label class="col-form-label col-2 col-lg-1">Aka Title:</label>
+          <input type="text" placeholder="please input Aka Title" class="form-control akas-input col-10 col-lg-4">
+          <label class="col-form-label  col-2 col-lg-1 offset-lg-1">Region:</label>
+          <input type="text" placeholder="please input Region" class="form-control region-input col-10 col-lg-5">
         </div>
-        <div class="form-row form-group">
+      </div>
+
+      <div class="form-row form-group">
+        <h3>Principals</h3>
+        <button class="btn btn-primary ml-2" type="button" onclick="insertPrincipal()">Create</button>
+      </div>
+
+      <div id="principals-group" style="height:auto; overflow:auto;max-height: 400px">
+
+        <div class="form-row form-group" style="max-width: 99%">
           <label class="col-form-label col-2 col-lg-1">NameID:</label>
-          <input type="text" placeholder="please input NameID" class="form-control nconst-input col-10 col-lg-4" required>
+          <input type="text" placeholder="please input NameID" class="form-control nconst-input col-10 col-lg-4">
           <label class="col-form-label  col-2 col-lg-1 offset-lg-1">Category:</label>
-          <input type="text" placeholder="please input Category" class="form-control category-input col-10 col-lg-5"
-            required>
+          <input type="text" placeholder="please input Category" class="form-control category-input col-10 col-lg-5">
         </div>
         
       </div>
-      <div class="form-row justify-content-end">
-        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-        <button type="reset" class="btn btn-danger mr-2">Reset</button>
+      <div class="form-row justify-content-end mt-3">
+        <button type="submit" class="btn btn-primary mr-2" onclick="addValidated()">Insert</button>
+        <button type="reset" class="btn btn-danger mr-2" onclick="removeValidated()">Reset</button>
       </div>
     </form>
   </div>
-
+  <script src="../static/js/axios.min.js"></script>
+  <script src="/../static/js/movieManage.js"></script>
   <script src="../static/js/jquery-3.6.0.min.js"></script>
   <script src="../static/js/bootstrap.js"></script>
 </body>

@@ -27,6 +27,7 @@
     <div class="col-sm-6 col-lg-4 text-white">
       <h2 id="title">Shooter</h2>
       <div class="lib-header-seperator"></div>
+      <p>影片ID：<span id="tconst"></span></p>
       <p>影片类别：<span id="titleType"></span></p>
       <p>影片体裁：<span id="genres"></span></p>
       <p>是否成人：<span id="isAdult"></span></p>
@@ -82,6 +83,7 @@
         .then(res => {
           console.log(res.data)
           let data = res.data.data[0]
+          let tconst =document.getElementById("tconst")
           let title = document.getElementById("title")
           let titleType = document.getElementById("titleType")
           let genres = document.getElementById("genres")
@@ -92,6 +94,7 @@
           let rating = document.getElementById("rating")
           let directors = document.getElementById("directors")
           let writers = document.getElementById("writers")
+          tconst.innerText = data.tconst
           title.innerText = data.primaryTitle
           titleType.innerText = data.titleType
           genres.innerText = data.genres

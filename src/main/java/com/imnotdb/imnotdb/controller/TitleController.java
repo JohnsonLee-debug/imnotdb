@@ -4,11 +4,13 @@ import com.imnotdb.imnotdb.commons.JsonResult;
 import com.imnotdb.imnotdb.commons.PageJson;
 import com.imnotdb.imnotdb.pojo.Title;
 import com.imnotdb.imnotdb.service.TitleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/title")
+@Slf4j
 public class TitleController {
     @Autowired
     private TitleService titleService;
@@ -23,6 +25,7 @@ public class TitleController {
     @ResponseBody
     @PostMapping("/update")
     public JsonResult update(@RequestBody Title title){
+        log.info("title:{}",title.toString());
         titleService.updateTitle(title);
         return new JsonResult().setOk();
     }
