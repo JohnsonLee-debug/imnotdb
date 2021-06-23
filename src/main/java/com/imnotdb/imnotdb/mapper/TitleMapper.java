@@ -89,14 +89,17 @@ public class TitleMapper {
             }
         }
         if(title.getCrew() != null){
-            nutDao.update(title.getCrew(), Cnd.where("tconst","=",tconst));
+            title.getCrew().setTconst(tconst);
+            nutDao.update(title.getCrew(), Cnd.where("tconst", "=", tconst));
         }
         if(title.getRating() != null){
-            nutDao.update(title.getRating(), Cnd.where("tconst","=",tconst));
+            title.getRating().setTconst(tconst);
+            nutDao.update(title.getRating(), Cnd.where("tconst", "=", tconst));
         }
         if(title.getPrincipals() != null && title.getPrincipals().size() > 0){
             for (Principals principal : title.getPrincipals()) {
-                nutDao.update(principal, Cnd.where("tconst", "=", tconst).and("nconst","=", principal.getNconst()));
+                principal.setTconst(tconst);
+                nutDao.update(principal, Cnd.where("tconst", "=", tconst).and("nconst", "=", principal.getNconst()));
             }
         }
         nutDao.update(title, Cnd.where("tconst","=", title.getTconst()));
