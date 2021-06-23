@@ -92,15 +92,17 @@ public class TitleMapper {
             title.getCrew().setTconst(tconst);
             nutDao.update(title.getCrew(), Cnd.where("tconst", "=", tconst));
         }
-        if(title.getRating() != null){
+        if (title.getRating() != null) {
             title.getRating().setTconst(tconst);
             nutDao.update(title.getRating(), Cnd.where("tconst", "=", tconst));
         }
-        if(title.getPrincipals() != null && title.getPrincipals().size() > 0){
+        if (title.getPrincipals() != null && title.getPrincipals().size() > 0) {
             for (Principals principal : title.getPrincipals()) {
                 principal.setTconst(tconst);
                 nutDao.update(principal, Cnd.where("tconst", "=", tconst).and("nconst", "=", principal.getNconst()));
             }
+        } else {
+            nutDao.clear(Principals.class, Cnd.where("tconst", "=", tconst));
         }
         nutDao.update(title, Cnd.where("tconst","=", title.getTconst()));
         TitleFull titleFull = bigTableTransformer.titleToFull(title);
