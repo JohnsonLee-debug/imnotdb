@@ -7,145 +7,338 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
   <title>imnotdb后台管理系统</title>
   <link rel="stylesheet" href="../static/css/bootstrap.css">
-
+  <style>
+      .middle {
+          text-align: center;
+          vertical-align: middle;
+      }
+  </style>
 
 </head>
 
 <body class="bg-light">
-  <div class="container">
-    <div class="row">
-      <h2>电影管理</h2>
-      <a href="#" class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 align-self-center">新增电影</a>
-    </div>
-    <div class="row">
-
-      <div class="col-6 align-self-end">
-        <label for="tconst">电影ID：</label>
-        <input type="text" name="tconst" id="tconst" placeholder="请输入电影ID">
-      </div>
-
-      <button type="button" class="btn btn-info mr-2">修改电影信息</button>
-      <button type="button" class="btn btn-danger">删除电影</button>
-    </div>
-    <div class="row mt-5">
-      <h2>人员管理</h2>
-      <button type="button" class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 mt-1" data-toggle="modal"
-      data-target="#insertModal">新增人员</button>
-    </div>
-
-    <div class="row">
-
-      <div class="col-6 align-self-end">
-        <label for="nconst">人员ID：</label>
-        <input type="text" name="nconst" id="nconst" placeholder="请输入人员ID">
-      </div>
-      <button type="button" class="btn btn-info mr-2" data-toggle="modal"
-      data-target="#modifiedModal">修改人员信息</button>
-      <button type="button" class="btn btn-danger">删除人员</button>
-    </div>
-    <div class="row mt-5">
-      <h2>人员ID搜索器</h2>
-    </div>
-    <div class="row">
-      <div class="col-6 align-self-end">
-        <label for="nconst">人员名称：</label>
-        <input type="text" name="nconst" id="nconst" placeholder="必须输入人员准确名称">
-      </div>
-      <button type="button" class="btn btn-primary">搜索人员名称</button>
-    </div>
-    <div class="row result">
-      <p class="col-4 offset-2 align-self-end mt-2">此人员ID为：<span id="returnNconst">nm0000089</span></p>
-    </div>
+<div class="container">
+  <div class="row">
+    <h2>电影管理</h2>
+    <a href="insertMovie"
+       class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 align-self-center">新增电影</a>
   </div>
-  <!-- 新增人员弹出的模态框 -->
-  <div class="modal fade" id="insertModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5>新增人员</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <form action="" class="needs-validation" novalidate>
+  <div class="row">
+
+    <div class="col-6 align-self-end">
+      <label for="tconst">电影ID：</label>
+      <input type="text" name="tconst" id="tconst" placeholder="请输入电影ID" onchange="updateMovieButton()">
+    </div>
+
+    <a class="btn btn-info mr-2" id="updateMovie-btn" href="#">修改电影信息</a>
+    <button type="button" class="btn btn-danger" onclick="deleteMovie()">删除电影</button>
+  </div>
+  <!-- <div class="row mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>出错了！</strong>删除电影失败！
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="row alert alert-success alert-dismissible fade show" role="alert">
+      <strong>操作成功！</strong>ID为<span id="alert-tconst"></span>的电影已被成功删除！
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div> -->
+
+  <div class="row mt-5">
+    <h2>人员管理</h2>
+    <button type="button" class="btn btn-primary col-2 col-lg-1 text-nowrap ml-2 h-75 mt-1" data-toggle="modal"
+            data-target="#insertModal">新增人员
+    </button>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6 align-self-end">
+      <label for="search-nconst">人员ID：</label>
+      <input type="text" name="nconst" id="search-nconst" placeholder="请输入人员ID">
+    </div>
+    <button type="button" class="btn btn-info mr-2" data-toggle="modal"
+            data-target="#modifiedModal" onclick="getPersonInfo()">修改人员信息
+    </button>
+    <button type="button" class="btn btn-danger" onclick="deletePerson()">删除人员</button>
+  </div>
+  <div class="row mt-5">
+    <h2>人员ID搜索器</h2>
+  </div>
+  <div class="row">
+    <div class="col-6 align-self-end">
+      <label for="search-name">人员名称：</label>
+      <input type="text" name="nconst" id="search-name" placeholder="必须输入人员准确名称">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="searchPerson()">搜索人员名称</button>
+  </div>
+  <div class="table-responsive row mt-3">
+    <table class="table table-hover table-striped">
+      <thead class="thead-light text-nowrap">
+      <tr>
+        <th class="middle">人员ID</th>
+        <th class="middle">人员姓名</th>
+        <th class="middle">出生年份</th>
+        <th class="middle">死亡年份</th>
+        <th class="middle">主要职业</th>
+        <th class="middle">代表作</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- 新增人员弹出的模态框 -->
+<div class="modal fade" id="insertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>新增人员</h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form action="" class="needs-validation" novalidate>
             <div class="form-group form-row">
               <label for="primaryName" class="col-form-label col-3">姓名：</label>
-              <input type="text" class="form-control col-9" required name="primaryName" id="primaryName">
+              <input type="text" class="form-control col-9 insert-input" required name="primaryName"
+                     id="primaryName">
             </div>
             <div class="form-group form-row">
               <label for="birthYear" class="col-form-label col-3">出生年份：</label>
-              <input type="number" class="form-control col-9" name="birthYear" id="birthYear">
+              <input type="number" class="form-control col-9 insert-input" name="birthYear" id="birthYear" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="deathYear" class="col-form-label col-3">死亡年份：</label>
-              <input type="number" class="form-control col-9" name="deathYear" id="deathYear">
+              <input type="number" class="form-control col-9 insert-input" name="deathYear" id="deathYear" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="primaryProfession" class="col-form-label col-3">主要职业：</label>
-              <input type="text" class="form-control col-9" required name="primaryProfession" id="primaryProfession">
+              <input type="text" class="form-control col-9 insert-input" required name="primaryProfession"
+                     id="primaryProfession">
             </div>
             <div class="form-group form-row">
               <label for="knownForTitles" class="col-form-label col-3">代表作ID：</label>
-              <input type="text" class="form-control col-9"  name="knownForTitles" id="knownForTitles" placeholder="如：tt0036723,tt0035103,tt0040525">
+              <input type="text" class="form-control col-9 insert-input" name="knownForTitles" id="knownForTitles"
+                     placeholder="如：tt0036723,tt0035103,tt0040525">
             </div>
-            </form>
-          </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary">确认保存</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="insertPerson()">确认保存</button>
       </div>
     </div>
   </div>
+</div>
 
 
-  <!-- 修改人员弹出的模态框 -->
-  <div class="modal fade" id="modifiedModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5>修改人员</h5>
-          <button class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <form action="" class="needs-validation" novalidate>
-            <input type="text" name="nconst" id="nconst" class="modified-input d-none">
+<!-- 修改人员弹出的模态框 -->
+<div class="modal fade" id="modifiedModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>修改人员</h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form action="" class="needs-validation" novalidate>
+            <input type="text" name="nconst" id="nconst" class="update-input d-none">
             <div class="form-group form-row">
               <label for="primaryName1" class="col-form-label col-3">姓名：</label>
-              <input type="text" class="form-control col-9" required name="primaryName" id="primaryName1">
+              <input type="text" class="form-control col-9 update-input" required name="primaryName"
+                     id="primaryName1">
             </div>
             <div class="form-group form-row">
               <label for="birthYear1" class="col-form-label col-3">出生年份：</label>
-              <input type="number" class="form-control col-9" name="birthYear" id="birthYear1">
+              <input type="number" class="form-control col-9 update-input" name="birthYear" id="birthYear1" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="deathYear1" class="col-form-label col-3">死亡年份：</label>
-              <input type="number" class="form-control col-9" name="deathYear" id="deathYear1">
+              <input type="number" class="form-control col-9 update-input" name="deathYear" id="deathYear1" min="1901" max="2155">
             </div>
             <div class="form-group form-row">
               <label for="primaryProfession1" class="col-form-label col-3">主要职业：</label>
-              <input type="text" class="form-control col-9" required name="primaryProfession" id="primaryProfession1">
+              <input type="text" class="form-control col-9 update-input" required name="primaryProfession"
+                     id="primaryProfession1">
             </div>
             <div class="form-group form-row">
               <label for="knownForTitles1" class="col-form-label col-3">代表作ID：</label>
-              <input type="text" class="form-control col-9"  name="knownForTitles" id="knownForTitles1" placeholder="如：tt0036723,tt0035103,tt0040525">
+              <input type="text" class="form-control col-9 update-input" name="knownForTitles" id="knownForTitles1"
+                     placeholder="如：tt0036723,tt0035103,tt0040525">
             </div>
-            </form>
-          </div>
+          </form>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary">确认保存</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="updatePerson()">确认保存</button>
       </div>
     </div>
   </div>
-  <script src="../static/js/jquery-3.6.0.min.js"></script>
-  <script src="../static/js/bootstrap.js"></script>
+</div>
+<script src="../static/js/axios.min.js"></script>
+<script>
+  const jsonSend = axios.create({
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+
+  function deleteMovie() {
+    let tconst = document.getElementById("tconst").value
+    if (tconst !== "" && confirm(`你确定要删除ID为${tconst}的电影吗？`)) {
+      axios.get(`/title/delete?tconst=${tconst}`).then(res => {
+        //console.log(res.data)
+        if (res.data.isOk)
+          alert("删除成功！")
+        else
+          alert("删除失败！")
+      })
+    }
+  }
+
+  function getPersonInfo() {
+
+    let search_nconst = document.getElementById("search-nconst").value
+    console.log(search_nconst)
+    axios.get(`/name/getNameByNconst?nconst=${search_nconst}`)
+        .then(res => {
+          if (res.data.count === 0)
+            alert("获取人员信息失败！请检查输入的ID是否正确！")
+          else {
+            console.log(res.data)
+            let info = res.data.data[0]
+            let nconst = document.getElementById("nconst")
+            nconst.value = info.nconst
+            let primaryName = document.getElementById("primaryName1")
+            primaryName.value = info.primaryName
+            let birthYear = document.getElementById("birthYear1")
+            birthYear.value = info.birthYear
+            let deathYear = document.getElementById("deathYear1")
+            deathYear.value = info.deathYear
+            let primaryProfession = document.getElementById("primaryProfession1")
+            primaryProfession.value = info.primaryProfession
+            let knownForTitles = document.getElementById("knownForTitles1")
+            knownForTitles.value = info.knownForTitles
+          }
+        })
+  }
+
+  function insertPerson() {
+    let inputs = document.getElementsByClassName("insert-input")
+    let json = {}
+    Array.prototype.forEach.call(inputs, elem => {
+      if (elem.type === "number" && elem.value !== "")
+        json[elem.name] = parseInt(elem.value)
+      if (elem.type === "text" && elem.value !== "")
+        json[elem.name] = elem.value
+    })
+    console.log(JSON.stringify(json))
+    jsonSend.post("/name/insert", JSON.stringify(json))
+        .then(res => {
+          console.log(res.data)
+          if (res.data.isOk)
+            alert("插入成功！")
+          else
+            alert("插入失败！")
+        })
+  }
+
+  function updatePerson() {
+    let inputs = document.getElementsByClassName("update-input")
+    let json = {}
+    Array.prototype.forEach.call(inputs, elem => {
+      if (elem.type === "number" && elem.value !== "")
+        json[elem.name] = parseInt(elem.value)
+      if (elem.type === "text" && elem.value !== "")
+        json[elem.name] = elem.value
+    })
+    console.log(JSON.stringify(json))
+    jsonSend.post("/name/update", JSON.stringify(json))
+        .then(res => {
+          console.log(res.data)
+          if (res.data.isOk)
+            alert("更新成功！")
+          else
+            alert("更新失败！")
+        })
+  }
+
+  function deletePerson() {
+    let search_nconst = document.getElementById("search-nconst").value
+    if (search_nconst !== "" && confirm(`你确定要删除ID为${search_nconst}的人员吗？`)) {
+      axios.get(`/name/delete?nconst=${search_nconst}`)
+          .then(res => {
+            console.log(res.data)
+            if (res.data.isOk)
+              alert("删除成功！")
+            else
+              alert("删除失败！")
+          })
+    }
+  }
+
+  function searchPerson() {
+    let search_name = document.getElementById("search-name").value
+    axios.get(`/name/searchByName?name=${search_name}`)
+        .then(res => {
+          console.log(res.data)
+          let tableData = res.data.data
+          let tbody = document.getElementsByTagName("tbody")[0]
+          tbody.innerHTML = ""
+
+          function createMiddleTd() {
+            let res = document.createElement("td")
+            res.classList.add("middle")
+            return res
+          }
+
+          tableData.forEach(elem => {
+            let tr = document.createElement("tr")
+            let nconst = document.createElement("th")
+            nconst.classList.add("middle")
+            nconst.innerText = elem.nconst
+            tr.appendChild(nconst)
+            let primaryName = createMiddleTd()
+            primaryName.innerText = elem.primaryName
+            tr.appendChild(primaryName)
+            let birthYear = createMiddleTd()
+            birthYear.innerText = elem.birthYear
+            tr.appendChild(birthYear)
+            let deathYear = createMiddleTd()
+            deathYear.innerText = elem.deathYear
+            tr.appendChild(deathYear)
+            let primaryProfession = createMiddleTd()
+            primaryProfession.innerText = elem.primaryProfession.replaceAll(',',' ')
+            tr.appendChild(primaryProfession)
+            let knownForTitles = createMiddleTd()
+            axios.get(`/name/getKnownForTitlesOf?nconst=${elem.nconst}`)
+                .then(res => knownForTitles.innerHTML = res.data.titles)
+            tr.appendChild(knownForTitles)
+            tbody.appendChild(tr)
+          })
+        })
+  }
+  function updateMovieButton(){
+    let tconst = document.getElementById("tconst").value
+    let update_btn = document.getElementById("updateMovie-btn")
+    if(tconst !== '')
+      update_btn.href = `updateMovie?tconst=${tconst}`
+  }
+</script>
+<script src="../static/js/jquery-3.6.0.min.js"></script>
+<script src="../static/js/bootstrap.js"></script>
 </body>
 
 </html>
