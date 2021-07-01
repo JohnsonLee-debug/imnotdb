@@ -15,9 +15,9 @@
 
 ## 效果展示
 
-![1](README.assets/1.png)
+![1](https://i.loli.net/2021/07/01/eAMPs9hXpCN5BnT.png)
 
-![2](README.assets/2.png)
+![2](https://i.loli.net/2021/07/01/tXxUSJFkRbEneHa.png)
 
 ## 开发者
 
