@@ -15,9 +15,9 @@
 
 ## 效果展示
 
-![1 (1)](README.assets/1 (1).png)
+![1 (1)](./README.assets/1 (1).png)
 
-![1 (14)](README.assets/1 (14).png)
+![1 (14)](./README.assets/1 (14).png)
 
 ## 开发者
 
